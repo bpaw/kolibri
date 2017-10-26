@@ -14,11 +14,14 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--outputfile', type=str, default=None, dest="output_file")
+        parser.add_argument('-r', type=str, default=None, dest="input_file")
 
     def handle(self, *args, **options):
 
         logging.debug(args)
 
+        if options['input_file']:
+            logger.info("\n\nYOU ARE DOING -r FLAG\n\n")
         result = [hook.webpack_bundle_data for hook in WebpackBundleHook().registered_hooks if hook.webpack_bundle_data]
 
         if options["output_file"]:
