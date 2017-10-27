@@ -20,9 +20,12 @@ class Command(BaseCommand):
 
         logging.debug(args)
 
+        result = []
         if options['input_file']:
-            logger.info("\n\nYOU ARE DOING -r FLAG\n\n")
-        result = [hook.webpack_bundle_data for hook in WebpackBundleHook().registered_hooks if hook.webpack_bundle_data]
+            input_file = open(options['input_file'], 'r').read().split('\n')
+            result = [hook.webpack_bundle_data for hook in WebpackBundleHook().registered_hooks if (hook.webpack_bundle_data and hook.__module__ in input_file)]
+        else:
+            result = [hook.webpack_bundle_data for hook in WebpackBundleHook().registered_hooks if hook.webpack_bundle_data]
 
         if options["output_file"]:
             logger.info("Writing webpack_json output to {}".format(options["output_file"]))
