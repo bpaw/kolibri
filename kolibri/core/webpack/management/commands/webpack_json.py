@@ -23,7 +23,8 @@ class Command(BaseCommand):
         result = []
         if options['input_file']:
             input_file = open(options['input_file'], 'r').read().split('\n')
-            result = [hook.webpack_bundle_data for hook in WebpackBundleHook().registered_hooks if (hook.webpack_bundle_data and hook.__module__ in input_file)]
+            input_file = filter(None, input_file)
+            result = [hook.webpack_bundle_data for hook in WebpackBundleHook().registered_hooks if (hook.webpack_bundle_data and any(hook.__module__.startswith(input) for input in input_file))]
         else:
             result = [hook.webpack_bundle_data for hook in WebpackBundleHook().registered_hooks if hook.webpack_bundle_data]
 
