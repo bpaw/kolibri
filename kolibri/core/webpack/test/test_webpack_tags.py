@@ -48,10 +48,11 @@ class KolibriTagNavigationTestCase(TestCase):
         os.remove('./.input_file.txt')
         self.assertEqual(len(result), 3)
 
-    def test_r_flag_random(self):
+    def test_r_flag_random_combinations(self):
 
         specified_plugins = ""
         num_elems = 0
+        # generate a random combination of plugins
         for plugin in DEFAULT_PLUGINS:
             if random.random() >= .5:
                 specified_plugins += plugin + '\n'
