@@ -5,6 +5,14 @@ import logging
 
 from django.core.management.base import BaseCommand
 from kolibri.core.webpack.hooks import WebpackBundleHook
+# from kolibri.plugins.registry import initialize
+import django
+from django.conf import settings
+
+settings.configure()
+django.setup()
+
+import kolibri.plugins.registry
 
 import argparse
 
